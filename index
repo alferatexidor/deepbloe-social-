@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deepbloe — Monday Suggestions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:ital,wght@0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #07070f;
+      color: #eeeef5;
+      font-family: 'DM Mono', monospace;
+      min-height: 100vh;
+      background-image:
+        linear-gradient(rgba(200,255,0,.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,255,0,.022) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    .wrap {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .hdr {
+      padding: 40px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .agency-tag {
+      display: inline-block;
+      font-size: 9px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: #c8ff00;
+      background: rgba(200,255,0,.1);
+      border: 1px solid rgba(200,255,0,.22);
+      padding: 4px 11px;
+      border-radius: 2px;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(30px, 5.5vw, 54px);
+      font-weight: 800;
+      line-height: .93;
+      letter-spacing: -.03em;
+      color: #eeeef5;
+    }
+
+    h1 span { color: #c8ff00; }
+
+    .date-label {
+      font-size: 10px;
+      color: #44445a;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+
+    .live-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      color: #44445a;
+      padding-top: 4px;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #c8ff00;
+      box-shadow: 0 0 8px rgba(200,255,0,.4);
+      animation: blink 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .2; }
+    }
+
+    .rule {
+      height: 1px;
+      background: linear-gradient(90deg, rgba(200,255,0,.28), #1e1e30 55%, transparent);
+      margin: 26px 0;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .count-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #44445a;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .count-text b { color: #c8ff00; }
+
+    .btn-refresh {
+      background: transparent;
+      border: 1px solid #1e1e30;
+      color: #44445a;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .btn-refresh:hover {
+      border-color: #c8ff00;
+      color: #c8ff00;
+      background: rgba(200,255,0,.07);
+    }
+
+    .loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 240px;
+      gap: 16px;
+    }
+
+    .spinner {
+      width: 30px;
+      height: 30px;
+      border: 2px solid #1e1e30;
+      border-top-color: #c8ff00;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loader-text {
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: #33334a;
+    }
+
+    .cards { display: grid; gap: 16px; }
+
+    .card {
+      background: #111120;
+      border: 1px solid #1a1a2e;
+      border-radius: 7px;
+      overflow: hidden;
+      transition: border-color .3s, box-shadow .2s;
+      animation: fadeUp .35s ease both;
+    }
+
+    .card:nth-child(1) { animation-delay: .04s; }
+    .card:nth-child(2) { animation-delay: .10s; }
+    .card:nth-child(3) { animation-delay: .16s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card:hover { border-color: #2a2a42; box-shadow: 0 4px 28px rgba(0,0,0,.5); }
+    .card.approved { border-color: rgba(200,255,0,.3); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px 12px;
+      border-bottom: 1px solid #1a1a2e;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .card-num { font-size: 9px; letter-spacing: .2em; color: #2a2a40; }
+
+    .artist-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: #eeeef5;
+      letter-spacing: -.01em;
+    }
+
+    .src-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 8px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #44445a;
+      background: #0c0c18;
+      border: 1px solid #1a1a2e;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    .src-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+
+    .type-badge {
+      font-size: 8.5px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .card-body {
+      padding: 16px 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 560px) { .card-body { grid-template-columns: 1fr; } }
+
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    .field-full { grid-column: 1 / -1; }
+
+    .field-label {
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: #33334a;
+    }
+
+    .field-value { font-size: 11.5px; color: #bbbbcf; line-height: 1.58; }
+
+    .field-caption {
+      font-size: 13.5px;
+      color: #f0f0f0;
+      border-left: 2px solid #c8ff00;
+      padding-left: 10px;
+      line-height: 1.65;
+    }
+
+    .field-alt {
+      font-size: 11px;
+      color: #44445a;
+      border-left: 2px solid #252538;
+      padding-left: 10px;
+      line-height: 1.65;
+      font-style: italic;
+    }
+
+    .field-visual { font-size: 11px; color: #ff9944; line-height: 1.5; }
+    .field-reason { font-size: 10.5px; color: #363650; line-height: 1.6; }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 18px;
+      border-top: 1px solid #1a1a2e;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .footer-meta { font-size: 9px; color: #2a2a40; letter-spacing: .05em; }
+    .footer-actions { display: flex; gap: 9px; }
+
+    .btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 8px 15px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all .2s;
+      border: none;
+    }
+
+    .btn-regen {
+      background: transparent;
+      border: 1px solid #1a1a2e;
+      color: #44445a;
+    }
+
+    .btn-regen:hover { border-color: #44445a; color: #bbbbcf; }
+
+    .btn-approve {
+      background: #c8ff00;
+      color: #07070f;
+      font-weight: 600;
+    }
+
+    .btn-approve:hover { background: #d6ff33; box-shadow: 0 0 16px rgba(200,255,0,.3); }
+
+    .btn-approved {
+      background: rgba(200,255,0,.1);
+      color: #c8ff00;
+      border: 1px solid rgba(200,255,0,.22);
+      cursor: default;
+    }
+
+    .approved-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(200,255,0,.07);
+      border-top: 1px solid rgba(200,255,0,.14);
+      padding: 8px 18px;
+      font-size: 9.5px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #c8ff00;
+    }
+
+    .approved-check {
+      width: 14px;
+      height: 14px;
+      background: #c8ff00;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      color: #07070f;
+      flex-shrink: 0;
+    }
+
+    .stats {
+      margin-top: 36px;
+      padding: 16px 20px;
+      background: #0c0c18;
+      border: 1px solid #1a1a2e;
+      border-radius: 5px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stat { display: flex; flex-direction: column; gap: 3px; }
+
+    .stat-label {
+      font-size: 8px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #33334a;
+    }
+
+    .stat-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: #eeeef5;
+    }
+
+    .stat-accent { color: #c8ff00; }
+
+    .api-note {
+      margin-top: 18px;
+      padding: 13px 17px;
+      background: rgba(68,136,255,.06);
+      border: 1px solid rgba(68,136,255,.16);
+      border-radius: 4px;
+      font-size: 10.5px;
+      color: #445588;
+      line-height: 1.65;
+    }
+
+    .api-note strong { color: #6677aa; }
+
+    .api-note code {
+      background: rgba(68,136,255,.12);
+      padding: 1px 5px;
+      border-radius: 2px;
+      color: #8899cc;
+      font-size: 10px;
+    }
+
+    .page-footer {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid #1a1a2e;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .footer-brand {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: #252538;
+    }
+
+    .footer-note { font-size: 9px; color: #252538; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hdr">
+      <div>
+        <div class="agency-tag">Deepbloe Artist Agency</div>
+        <h1>Monday<br /><span>Suggestions</span></h1>
+        <div class="date-label" id="date-label"></div>
+      </div>
+      <div class="live-indicator">
+        <span class="live-dot"></span>
+        Signal engine active
+      </div>
+    </header>
+
+    <div class="rule"></div>
+
+    <div class="toolbar">
+      <div class="count-text" id="count-text"></div>
+      <button class="btn-refresh" onclick="load(true)">↻ Refresh All</button>
+    </div>
+
+    <div id="main-content">
+      <div class="loader">
+        <div class="spinner"></div>
+        <div class="loader-text">Reading signals…</div>
+      </div>
+    </div>
+
+    <div id="bottom" style="display:none">
+      <div class="stats" id="stats"></div>
+      <div class="api-note">
+        <strong>Instagram Graph API</strong> — Replace the <code>SIGNALS</code> array with live data
+        from <code>/me/mentions</code> using your Deepbloe Business account token.
+        Signal parsing and caption generation logic stays unchanged.
+      </div>
+      <div class="page-footer">
+        <div class="footer-brand">DEEPBLOE ARTIST AGENCY</div>
+        <div class="footer-note">Internal tool · All captions are original agency content</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ARTISTS = [
+      { name: "LIU",         priority: 1 },
+      { name: "B Jones",     priority: 2 },
+      { name: "RSCL",        priority: 2 },
+      { name: "Brooks",      priority: 3 },
+      { name: "Sam Collins", priority: 3 },
+    ];
+
+    const SIGNALS = [
+      { id:"s1",  artist:"LIU",         type:"show_highlight",      source:"instagram_mention", summary:"LIU mentioned Deepbloe after performing in Dubai",                  location:"Dubai, UAE",           date:"2026-03-09" },
+      { id:"s2",  artist:"B Jones",     type:"festival_appearance", source:"instagram_mention", summary:"B Jones confirmed for Ultra Music Festival lineup",                 location:"Miami, USA",           date:"2026-03-08" },
+      { id:"s3",  artist:"RSCL",        type:"new_release",         source:"public_activity",   summary:"RSCL dropped new single 'Frequency' on all platforms",              location:"Online",               date:"2026-03-07" },
+      { id:"s4",  artist:"Brooks",      type:"tour_update",         source:"instagram_mention", summary:"Brooks announced 6-city Asia tour for April",                       location:"Asia Tour",            date:"2026-03-06" },
+      { id:"s5",  artist:"Sam Collins", type:"media_feature",       source:"public_activity",   summary:"Sam Collins featured in DJ Mag emerging artists spotlight",          location:"UK Press",             date:"2026-03-05" },
+      { id:"s6",  artist:"LIU",         type:"backstage_moment",    source:"instagram_mention", summary:"LIU shared backstage prep content before Riyadh show",              location:"Riyadh, Saudi Arabia", date:"2026-03-04" },
+      { id:"s7",  artist:"RSCL",        type:"momentum_signal",     source:"public_activity",   summary:"RSCL's remix crossed 1M streams on Spotify",                        location:"Online",               date:"2026-03-03" },
+      { id:"s8",  artist:"B Jones",     type:"artist_spotlight",    source:"instagram_mention", summary:"B Jones wrapped 5 consecutive weekend shows across Europe",          location:"Europe",               date:"2026-03-02" },
+      { id:"s9",  artist:"Brooks",      type:"show_highlight",      source:"instagram_mention", summary:"Brooks headlined Zouk Singapore to a sold-out crowd",               location:"Singapore",            date:"2026-03-01" },
+      { id:"s10", artist:"Sam Collins", type:"new_release",         source:"public_activity",   summary:"Sam Collins released acoustic EP independently",                    location:"Online",               date:"2026-02-28" },
+    ];
+
+    const CAPS = {
+      show_highlight: {
+        caps: [
+          (a,l) => `${a} brought the energy to ${l} this weekend.`,
+          (a,l) => `Another strong weekend for ${a} with a high-energy show in ${l}.`,
+          (a,l) => `${a} delivered in ${l}. A night to remember.`,
+          (a,l) => `${l} felt it. ${a} didn't hold back.`,
+        ],
+        alts: [
+          (a,l) => `From the stage to the crowd — ${a} left everything in ${l}.`,
+          (a,l) => `${a} is on form. ${l} was just the latest proof.`,
+          (a,l) => `Every show tells a story. ${a} wrote another one in ${l}.`,
+        ],
+        visual: "High-energy stage shot or crowd reaction photo",
+        angle: "Performance Highlight",
+        reason: "Post while the show momentum is fresh.",
+      },
+      festival_appearance: {
+        caps: [
+          (a,l) => `${a} is on the bill. See you at ${l}.`,
+          (a,l) => `Festival season continues. ${a} confirmed for ${l}.`,
+          (a,l) => `${a} joins the ${l} lineup.`,
+          (a,l) => `The stage is set. ${a} heads to ${l}.`,
+        ],
+        alts: [
+          (a,l) => `${a} and ${l} — mark it down.`,
+          (a,l) => `${l} just got stronger. ${a} is confirmed.`,
+          (a,l) => `${a} on the festival circuit. ${l} is next.`,
+        ],
+        visual: "Official festival poster or live artist shot",
+        angle: "Festival Lineup",
+        reason: "Lineup news drives peak engagement — share immediately.",
+      },
+      new_release: {
+        caps: [
+          (a)   => `${a} is out. New music, new moves.`,
+          (a)   => `New from ${a}. Available everywhere now.`,
+          (a)   => `Fresh from ${a}. This one's been in the works.`,
+          (a)   => `${a} steps into a new chapter. Out now.`,
+        ],
+        alts: [
+          (a)   => `${a} delivers. New release — go stream it.`,
+          (a)   => `The wait is over. New music from ${a} is live.`,
+          (a)   => `New music from ${a}. On all platforms today.`,
+        ],
+        visual: "Single artwork or studio behind-the-scenes",
+        angle: "New Release",
+        reason: "Post while streams are climbing — first 48hrs are critical.",
+      },
+      backstage_moment: {
+        caps: [
+          (a,l) => `The work behind the show. ${a} in ${l}.`,
+          (a,l) => `Before the lights go up — ${a} getting ready in ${l}.`,
+          (a)   => `This is what preparation looks like for ${a}.`,
+          (a,l) => `Backstage in ${l}. ${a} in their element.`,
+        ],
+        alts: [
+          (a)   => `Behind every show, there's a process. ${a} lives it.`,
+          (a,l) => `${a}, ${l}. The moments before the moment.`,
+          (a)   => `The real work happens before the spotlight. ${a} knows.`,
+        ],
+        visual: "Authentic backstage or pre-show candid",
+        angle: "Behind the Scenes",
+        reason: "Candid content builds authentic engagement.",
+      },
+      artist_spotlight: {
+        caps: [
+          (a) => `${a} has been moving. Here's what you might have missed.`,
+          (a) => `Consistent, focused, and delivering. That's ${a} right now.`,
+          (a) => `${a} keeps building. The momentum is real.`,
+          (a) => `A run like this doesn't happen by accident. ${a} is putting in the work.`,
+        ],
+        alts: [
+          (a) => `Keep your eye on ${a}. The trajectory speaks for itself.`,
+          (a) => `${a}. In full swing.`,
+          (a) => `The ${a} era is well underway.`,
+        ],
+        visual: "Strong portrait or live action composite",
+        angle: "Artist Spotlight",
+        reason: "Recap content reinforces momentum and fills the calendar.",
+      },
+      tour_update: {
+        caps: [
+          (a,l) => `${a} is heading to ${l}. Dates confirmed.`,
+          (a,l) => `The ${l} run is locked in for ${a}.`,
+          (a,l) => `${a} takes on ${l}. More details soon.`,
+          (a,l) => `${l} — ${a} is coming your way.`,
+        ],
+        alts: [
+          (a,l) => `Tour life for ${a}. Next stop: ${l}.`,
+          (a,l) => `${a} on the road again. ${l} is up first.`,
+          (a,l) => `${a} × ${l}. It's on.`,
+        ],
+        visual: "Tour map graphic or artist travel shot",
+        angle: "Tour Announcement",
+        reason: "Tour news drives ticket traffic — post early.",
+      },
+      media_feature: {
+        caps: [
+          (a) => `${a} in the press. Worth a read.`,
+          (a) => `The conversation around ${a} is growing. Catch the feature.`,
+          (a) => `${a} gets the spotlight they've earned.`,
+          (a) => `The story behind ${a}. Now in print.`,
+        ],
+        alts: [
+          (a) => `More eyes on ${a}. And rightly so.`,
+          (a) => `${a}, covered. The feature is live.`,
+          (a) => `The ${a} story, told properly. Out now.`,
+        ],
+        visual: "Press publication screenshot or editorial cover",
+        angle: "Press Coverage",
+        reason: "Press features amplify credibility — share while fresh.",
+      },
+      momentum_signal: {
+        caps: [
+          (a) => `The numbers are speaking for ${a}.`,
+          (a) => `${a} is building something real. The momentum is there.`,
+          (a) => `Milestone reached for ${a}. More where that came from.`,
+          (a) => `${a} keeps growing. Just getting started.`,
+        ],
+        alts: [
+          (a) => `The trajectory for ${a} is pointing in one direction.`,
+          (a) => `${a} hits another mark. Watch this space.`,
+          (a) => `Numbers don't lie. ${a} is on a roll.`,
+        ],
+        visual: "Streaming stats graphic or platform screenshot",
+        angle: "Growth Milestone",
+        reason: "Milestone posts invite sharing and reinforce the growth story.",
+      },
+    };
+
+    const TYPE_LABELS = {
+      show_highlight:"Show Highlight", festival_appearance:"Festival", new_release:"New Release",
+      backstage_moment:"Backstage", artist_spotlight:"Spotlight", tour_update:"Tour Update",
+      media_feature:"Press Feature", momentum_signal:"Momentum",
+    };
+
+    const TYPE_COLORS = {
+      show_highlight:"#4a9eff", festival_appearance:"#9977ff", new_release:"#c8ff00",
+      backstage_moment:"#ff9944", artist_spotlight:"#ff5577", tour_update:"#44d4ff",
+      media_feature:"#cc66ff", momentum_signal:"#c8ff00",
+    };
+
+    let currentCards = [];
+
+    function buildCard(sig, v) {
+      const t = CAPS[sig.type];
+      if (!t) return null;
+      const a = sig.artist, l = sig.location;
+      return {
+        sig,
+        caption: t.caps[v % t.caps.length](a, l),
+        alt:     t.alts[v % t.alts.length](a, l),
+        visual:  t.visual,
+        angle:   t.angle,
+        reason:  t.reason,
+        v,
+        approved: false,
+      };
+    }
+
+    function pickSignals(pool) {
+      const pm = {};
+      ARTISTS.forEach(a => pm[a.name] = a.priority);
+      const ref = new Date("2026-03-11");
+      const scored = pool.map(s => {
+        const days = Math.floor((ref - new Date(s.date)) / 86400000);
+        return { ...s, score: Math.max(0, 10 - days) + (4 - (pm[s.artist] || 3)) * 2 };
+      }).sort((a, b) => b.score - a.score);
+      const out = [], seen = new Set();
+      for (const s of scored) {
+        if (out.length >= 3) break;
+        if (!seen.has(s.artist)) { out.push(s); seen.add(s.artist); }
+      }
+      return out;
+    }
+
+    function load(randomize) {
+      document.getElementById("main-content").innerHTML = `
+        <div class="loader">
+          <div class="spinner"></div>
+          <div class="loader-text">Reading signals…</div>
+        </div>`;
+      document.getElementById("bottom").style.display = "none";
+
+      setTimeout(() => {
+        const pool = randomize
+          ? [...SIGNALS].sort(() => Math.random() - 0.5)
+          : SIGNALS;
+
+        currentCards = pickSignals(pool)
+          .map((s, i) => buildCard(s, randomize ? Math.floor(Math.random() * 4) : i))
+          .filter(Boolean);
+
+        render();
+      }, 500);
+    }
+
+    function approve(i) {
+      currentCards[i].approved = true;
+      render();
+    }
+
+    function regen(i) {
+      const c = currentCards[i];
+      const nv = (c.v + 1) % 4;
+      currentCards[i] = { ...buildCard(c.sig, nv), approved: false };
+      render();
+    }
+
+    function render() {
+      const approvedCount = currentCards.filter(c => c.approved).length;
+
+      document.getElementById("count-text").innerHTML =
+        `<b>${currentCards.length}</b> suggestions · <b>${approvedCount}</b> approved`;
+
+      document.getElementById("date-label").textContent = "Monday · 11 March 2026";
+
+      let html = '<div class="cards">';
+      currentCards.forEach((c, i) => {
+        const col = TYPE_COLORS[c.sig.type] || "#c8ff00";
+        const colBg  = col + "20";
+        const colBdr = col + "35";
+        const srcCol = c.sig.source === "instagram_mention" ? "#e1306c" : "#4488ff";
+        const srcLbl = c.sig.source === "instagram_mention" ? "IG Mention" : "Public Activity";
+
+        html += `
+          <div class="card${c.approved ? " approved" : ""}">
+            <div class="card-header">
+              <div class="card-header-left">
+                <span class="card-num">#${String(i+1).padStart(2,"0")}</span>
+                <span class="artist-name">${c.sig.artist}</span>
+                <span class="src-badge">
+                  <span class="src-dot" style="background:${srcCol}"></span>
+                  ${srcLbl}
+                </span>
+              </div>
+              <span class="type-badge" style="background:${colBg};color:${col};border:1px solid ${colBdr}">
+                ${TYPE_LABELS[c.sig.type] || c.sig.type}
+              </span>
+            </div>
+
+            <div class="card-body">
+              <div class="field">
+                <div class="field-label">Signal</div>
+                <div class="field-value">${c.sig.summary}</div>
+              </div>
+              <div class="field">
+                <div class="field-label">Content Angle</div>
+                <div class="field-value">${c.angle}</div>
+              </div>
+              <div class="field field-full">
+                <div class="field-label">Caption</div>
+                <div class="field-value field-caption">${c.caption}</div>
+              </div>
+              <div class="field field-full">
+                <div class="field-label">Alternative Caption</div>
+                <div class="field-value field-alt">${c.alt}</div>
+              </div>
+              <div class="field">
+                <div class="field-label">Suggested Visual</div>
+                <div class="field-value field-visual">${c.visual}</div>
+              </div>
+              <div class="field">
+                <div class="field-label">Why Post Now</div>
+                <div class="field-value field-reason">${c.reason}</div>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="footer-meta">${c.sig.date} · ${c.sig.location}</div>
+              <div class="footer-actions">
+                <button class="btn btn-regen" onclick="regen(${i})">↻ Regenerate</button>
+                ${!c.approved
+                  ? `<button class="btn btn-approve" onclick="approve(${i})">✓ Approve</button>`
+                  : `<button class="btn btn-approved" disabled>✓ Approved</button>`
+                }
+              </div>
+            </div>
+
+            ${c.approved ? `
+              <div class="approved-bar">
+                <span class="approved-check">✓</span>
+                Approved — ready to schedule
+              </div>` : ""}
+          </div>`;
+      });
+      html += "</div>";
+
+      document.getElementById("main-content").innerHTML = html;
+
+      const statsEl = document.getElementById("stats");
+      statsEl.innerHTML = `
+        <div class="stat"><div class="stat-label">Active Artists</div><div class="stat-value stat-accent">${ARTISTS.length}</div></div>
+        <div class="stat"><div class="stat-label">Signals in Pool</div><div class="stat-value">${SIGNALS.length}</div></div>
+        <div class="stat"><div class="stat-label">This Week</div><div class="stat-value">${currentCards.length}</div></div>
+        <div class="stat"><div class="stat-label">Approved</div><div class="stat-value stat-accent">${approvedCount}</div></div>
+      `;
+      document.getElementById("bottom").style.display = "block";
+    }
+
+    load(false);
+  </script>
+</body>
+</html> 
