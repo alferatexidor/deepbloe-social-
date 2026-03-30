@@ -11,30 +11,33 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black: #0a0a0a;
-      --dark: #111111;
-      --card: #161616;
-      --border: #242424;
-      --border-light: #2e2e2e;
-      --white: #f5f5f0;
-      --white-dim: #9a9a94;
-      --white-faint: #3a3a38;
-      --accent: #c8ff00;
-      --accent-dim: rgba(200,255,0,0.08);
+      --bg: #f4f3f0;
+      --white: #ffffff;
+      --card: #ffffff;
+      --border: #dddbd6;
+      --border-dark: #c8c6c0;
+      --black: #0f0f0f;
+      --text: #1a1a1a;
+      --text-mid: #555550;
+      --text-light: #999890;
+      --accent: #0f0f0f;
+      --accent-bg: #0f0f0f;
+      --green: #5a8a00;
+      --green-bg: #f0f7e0;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--black);
-      color: var(--white);
+      background: var(--bg);
+      color: var(--text);
       font-family: 'Barlow', sans-serif;
-      font-weight: 300;
+      font-weight: 400;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── NAV ── */
+    /* NAV */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -43,106 +46,102 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 48px;
-      height: 64px;
-      background: rgba(10,10,10,0.95);
+      height: 60px;
+      background: #ffffff;
       border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(8px);
     }
 
-    .nav-logo img {
-      height: 28px;
-      width: auto;
-      filter: brightness(0) invert(1);
-    }
-
-    .nav-logo-text {
+    .nav-logo {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--white);
+      color: var(--black);
     }
 
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: 28px;
     }
 
-    .nav-label {
+    .nav-tag {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 500;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--white-dim);
+      color: var(--text-light);
     }
 
     .nav-live {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 10px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--white-dim);
+      color: var(--text-light);
     }
 
     .live-dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--accent);
+      background: #5a8a00;
       animation: pulse 2s ease-in-out infinite;
     }
 
     @keyframes pulse {
-      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(200,255,0,0.4); }
-      50% { opacity: 0.6; box-shadow: 0 0 0 4px rgba(200,255,0,0); }
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
     }
 
-    /* ── PAGE ── */
-    .page {
-      padding-top: 64px;
-      min-height: 100vh;
-    }
+    /* PAGE */
+    .page { padding-top: 60px; }
 
-    /* ── HERO ── */
+    /* HERO */
     .hero {
-      padding: 80px 48px 60px;
+      background: var(--white);
+      padding: 64px 48px 52px;
       border-bottom: 1px solid var(--border);
     }
 
     .hero-eyebrow {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 500;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: var(--white-dim);
-      margin-bottom: 20px;
+      color: var(--text-light);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .hero-eyebrow span {
-      color: var(--accent);
-      margin-right: 12px;
+    .hero-eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--border-dark);
     }
 
     .hero-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(48px, 7vw, 96px);
+      font-size: clamp(44px, 6.5vw, 88px);
       font-weight: 300;
-      line-height: 0.92;
+      line-height: 0.93;
       letter-spacing: -0.01em;
-      color: var(--white);
-      margin-bottom: 32px;
+      color: var(--black);
+      margin-bottom: 36px;
     }
 
     .hero-title em {
       font-style: italic;
-      color: var(--white-dim);
+      color: var(--text-mid);
     }
 
     .hero-meta {
@@ -155,15 +154,15 @@
     .hero-meta-item {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
     }
 
     .hero-meta-label {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 9px;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: var(--white-faint);
+      color: var(--text-light);
     }
 
     .hero-meta-value {
@@ -171,18 +170,20 @@
       font-size: 13px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--white-dim);
+      color: var(--text-mid);
+      font-weight: 500;
     }
 
-    /* ── TOOLBAR ── */
+    /* TOOLBAR */
     .toolbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px 48px;
+      padding: 16px 48px;
+      background: var(--white);
       border-bottom: 1px solid var(--border);
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
     }
 
     .toolbar-left {
@@ -190,48 +191,51 @@
       font-size: 11px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--white-dim);
+      color: var(--text-light);
     }
 
-    .toolbar-left b { color: var(--white); font-weight: 600; }
+    .toolbar-left b {
+      color: var(--text);
+      font-weight: 600;
+    }
 
     .btn-refresh {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px;
-      font-weight: 500;
+      font-size: 10px;
+      font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--white-dim);
+      color: var(--text-mid);
       background: transparent;
-      border: 1px solid var(--border-light);
-      padding: 9px 20px;
+      border: 1px solid var(--border-dark);
+      padding: 8px 18px;
       cursor: pointer;
       transition: all 0.2s;
     }
 
     .btn-refresh:hover {
-      color: var(--white);
-      border-color: var(--white-dim);
-      background: rgba(255,255,255,0.04);
+      color: var(--black);
+      border-color: var(--black);
+      background: var(--bg);
     }
 
-    /* ── LOADER ── */
+    /* LOADER */
     .loader {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 320px;
-      gap: 20px;
+      min-height: 300px;
+      gap: 18px;
     }
 
     .spinner {
       width: 28px;
       height: 28px;
-      border: 1px solid var(--border-light);
-      border-top-color: var(--white-dim);
+      border: 1px solid var(--border-dark);
+      border-top-color: var(--black);
       border-radius: 50%;
-      animation: spin 0.9s linear infinite;
+      animation: spin 0.8s linear infinite;
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -241,56 +245,44 @@
       font-size: 10px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--white-faint);
+      color: var(--text-light);
     }
 
-    /* ── CARDS ── */
-    .cards {
+    /* CARDS AREA */
+    .cards-area {
       padding: 0 48px;
+      background: var(--bg);
     }
 
+    /* CARD */
     .card {
-      border-bottom: 1px solid var(--border);
-      padding: 40px 0;
-      display: grid;
-      grid-template-columns: 48px 1fr;
-      gap: 0 32px;
-      animation: fadeIn 0.4s ease both;
+      background: var(--white);
+      border: 1px solid var(--border);
+      margin: 20px 0;
+      padding: 36px 36px 28px;
+      animation: fadeUp 0.35s ease both;
+      position: relative;
     }
 
-    .card:nth-child(1) { animation-delay: 0.05s; }
-    .card:nth-child(2) { animation-delay: 0.12s; }
-    .card:nth-child(3) { animation-delay: 0.19s; }
+    .card:nth-child(1) { animation-delay: 0.04s; }
+    .card:nth-child(2) { animation-delay: 0.10s; }
+    .card:nth-child(3) { animation-delay: 0.17s; }
 
-    @keyframes fadeIn {
+    @keyframes fadeUp {
       from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    .card.approved .card-index-num { color: var(--accent); }
-
-    /* Card index */
-    .card-index {
-      padding-top: 4px;
+    .card.approved {
+      border-color: #b8d880;
     }
 
-    .card-index-num {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      color: var(--white-faint);
-      transition: color 0.3s;
-    }
-
-    /* Card main */
-    .card-main {}
-
+    /* Card top row */
     .card-top {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
       gap: 12px;
     }
@@ -298,63 +290,69 @@
     .card-top-left {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     .card-tags {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
     }
 
     .tag {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 9px;
-      font-weight: 500;
-      letter-spacing: 0.2em;
+      font-weight: 600;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       padding: 3px 9px;
-      border: 1px solid var(--border-light);
-      color: var(--white-dim);
+      border: 1px solid var(--border);
+      color: var(--text-mid);
+      background: var(--bg);
     }
 
-    .tag-type { border-color: var(--border-light); }
-    .tag-ig { color: #e1306c; border-color: rgba(225,48,108,0.3); }
-    .tag-public { color: #4a9eff; border-color: rgba(74,158,255,0.3); }
+    .tag-ig   { color: #c2185b; border-color: #f8bbd0; background: #fce4ec; }
+    .tag-pub  { color: #1565c0; border-color: #bbdefb; background: #e3f2fd; }
+
+    .card-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: var(--text-light);
+    }
 
     .artist-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(32px, 4vw, 52px);
-      font-weight: 300;
+      font-size: clamp(28px, 3.5vw, 46px);
+      font-weight: 400;
       line-height: 1;
-      letter-spacing: -0.01em;
-      color: var(--white);
+      color: var(--black);
     }
 
     .card-angle {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.18em;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--white-faint);
+      color: var(--text-light);
     }
 
-    /* Grid fields */
+    /* Divider */
+    .card-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+
+    /* Fields grid */
     .card-fields {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px 48px;
-      margin-bottom: 28px;
-    }
-
-    @media (max-width: 640px) {
-      .card-fields { grid-template-columns: 1fr; }
-      nav { padding: 0 20px; }
-      .hero { padding: 60px 20px 40px; }
-      .toolbar { padding: 16px 20px; }
-      .cards { padding: 0 20px; }
-      .bottom { padding: 0 20px 60px; }
+      gap: 22px 48px;
+      margin-bottom: 24px;
     }
 
     .field-full { grid-column: 1 / -1; }
@@ -362,73 +360,78 @@
     .field-label {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 9px;
-      font-weight: 500;
-      letter-spacing: 0.22em;
+      font-weight: 600;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: var(--white-faint);
+      color: var(--text-light);
       margin-bottom: 6px;
     }
 
     .field-value {
       font-family: 'Barlow', sans-serif;
       font-size: 13px;
-      font-weight: 300;
-      color: var(--white-dim);
+      font-weight: 400;
+      color: var(--text-mid);
       line-height: 1.6;
     }
 
     .field-caption {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 400;
-      color: var(--white);
-      line-height: 1.45;
-      border-left: 1px solid var(--white-dim);
+      color: var(--black);
+      line-height: 1.4;
       padding-left: 16px;
+      border-left: 2px solid var(--black);
     }
 
     .field-alt {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 300;
       font-style: italic;
-      color: var(--white-dim);
+      color: var(--text-mid);
       line-height: 1.5;
-      border-left: 1px solid var(--border-light);
       padding-left: 16px;
+      border-left: 2px solid var(--border-dark);
     }
 
     .field-visual {
       font-size: 12px;
-      color: #b8884a;
+      color: #7a6030;
+      font-weight: 400;
     }
 
     .field-reason {
       font-size: 12px;
-      color: var(--white-faint);
+      color: var(--text-light);
     }
 
-    /* Card actions */
-    .card-actions {
+    /* Card footer */
+    .card-footer {
       display: flex;
       align-items: center;
-      gap: 12px;
+      justify-content: space-between;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
       flex-wrap: wrap;
+      gap: 12px;
     }
 
-    .card-meta {
+    .footer-meta {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 10px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--white-faint);
-      flex: 1;
+      color: var(--text-light);
     }
+
+    .footer-actions { display: flex; gap: 10px; align-items: center; }
 
     .btn {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 10px;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       padding: 9px 20px;
@@ -439,67 +442,75 @@
 
     .btn-regen {
       background: transparent;
-      border: 1px solid var(--border-light);
-      color: var(--white-faint);
+      border: 1px solid var(--border-dark);
+      color: var(--text-mid);
     }
 
     .btn-regen:hover {
-      border-color: var(--white-dim);
-      color: var(--white-dim);
+      border-color: var(--black);
+      color: var(--black);
     }
 
     .btn-approve {
-      background: var(--white);
-      color: var(--black);
-      font-weight: 600;
+      background: var(--black);
+      color: #ffffff;
     }
 
     .btn-approve:hover {
-      background: var(--accent);
+      background: #333;
     }
 
     .btn-approved {
-      background: var(--accent-dim);
-      color: var(--accent);
-      border: 1px solid rgba(200,255,0,0.25);
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid #c5e08a;
       cursor: default;
     }
 
     .approved-label {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 10px;
+      font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--green);
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
     .approved-label::before {
-      content: '';
-      width: 16px;
-      height: 1px;
-      background: var(--accent);
+      content: '✓';
+      width: 18px;
+      height: 18px;
+      background: var(--green);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
     }
 
-    /* ── BOTTOM ── */
+    /* BOTTOM */
     .bottom {
-      padding: 48px 48px 80px;
+      padding: 40px 48px 72px;
+      background: var(--bg);
     }
 
     .stats-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 0;
       border: 1px solid var(--border);
-      margin-bottom: 32px;
+      background: var(--white);
+      margin-bottom: 24px;
     }
 
     .stat {
       flex: 1;
-      min-width: 120px;
-      padding: 24px 28px;
+      min-width: 110px;
+      padding: 22px 26px;
       border-right: 1px solid var(--border);
     }
 
@@ -508,9 +519,9 @@
     .stat-label {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 9px;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: var(--white-faint);
+      color: var(--text-light);
       margin-bottom: 8px;
     }
 
@@ -518,51 +529,52 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 36px;
       font-weight: 300;
-      color: var(--white);
+      color: var(--black);
       line-height: 1;
     }
 
-    .stat-value.accent { color: var(--accent); }
+    .stat-value.green { color: var(--green); }
 
     .api-note {
       border: 1px solid var(--border);
-      padding: 20px 24px;
-      margin-bottom: 40px;
+      background: var(--white);
+      padding: 18px 22px;
+      margin-bottom: 36px;
       font-family: 'Barlow', sans-serif;
       font-size: 12px;
-      font-weight: 300;
-      color: var(--white-faint);
+      font-weight: 400;
+      color: var(--text-mid);
       line-height: 1.7;
     }
 
-    .api-note strong { color: var(--white-dim); font-weight: 400; }
+    .api-note strong { color: var(--text); font-weight: 600; }
 
     .api-note code {
-      font-family: 'Barlow Condensed', monospace;
+      font-family: monospace;
       font-size: 11px;
-      letter-spacing: 0.05em;
-      color: #4a9eff;
-      background: rgba(74,158,255,0.08);
+      color: #1565c0;
+      background: #e3f2fd;
       padding: 1px 6px;
+      border-radius: 2px;
     }
 
     .page-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      padding-top: 32px;
+      padding-top: 24px;
       border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .footer-brand {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
+      font-weight: 700;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--white-faint);
+      color: var(--text-light);
     }
 
     .footer-note {
@@ -570,16 +582,23 @@
       font-size: 10px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--white-faint);
+      color: var(--text-light);
+    }
+
+    @media (max-width: 640px) {
+      nav, .hero, .toolbar, .cards-area, .bottom { padding-left: 20px; padding-right: 20px; }
+      .card { padding: 24px 20px 20px; }
+      .card-fields { grid-template-columns: 1fr; }
+      .field-full { grid-column: 1; }
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <div class="nav-logo-text">Deepbloe</div>
+    <div class="nav-logo">Deepbloe</div>
     <div class="nav-right">
-      <div class="nav-label">Internal Platform</div>
+      <div class="nav-tag">Internal Platform</div>
       <div class="nav-live">
         <span class="live-dot"></span>
         Live
@@ -590,15 +609,12 @@
   <div class="page">
 
     <div class="hero">
-      <div class="hero-eyebrow">
-        <span>—</span>
-        Deepbloe Platform · Social Content
-      </div>
+      <div class="hero-eyebrow">Deepbloe Platform · Social Content</div>
       <h1 class="hero-title">Monday<br /><em>Suggestions</em></h1>
       <div class="hero-meta">
         <div class="hero-meta-item">
           <div class="hero-meta-label">Week</div>
-          <div class="hero-meta-value" id="week-label">—</div>
+          <div class="hero-meta-value">11 March 2026</div>
         </div>
         <div class="hero-meta-item">
           <div class="hero-meta-label">Status</div>
@@ -616,7 +632,7 @@
       <button class="btn-refresh" onclick="load(true)">↻ Refresh Suggestions</button>
     </div>
 
-    <div class="cards" id="main-content">
+    <div class="cards-area" id="main-content">
       <div class="loader">
         <div class="spinner"></div>
         <div class="loader-text">Reading signals…</div>
@@ -626,13 +642,13 @@
     <div class="bottom" id="bottom" style="display:none">
       <div class="stats-row" id="stats-row"></div>
       <div class="api-note">
-        <strong>Instagram Graph API integration point</strong> — Replace the <code>SIGNALS</code> array
-        with live data via <code>/me/mentions</code> using your Deepbloe Business account token.
+        <strong>Instagram Graph API</strong> — Replace the <code>SIGNALS</code> array with live data
+        from <code>/me/mentions</code> using your Deepbloe Business account token.
         Signal parsing and caption generation logic remains unchanged.
       </div>
       <div class="page-footer">
         <div class="footer-brand">Deepbloe Agency B.V.</div>
-        <div class="footer-note">Internal tool · Signals are input only — all captions are original agency content</div>
+        <div class="footer-note">Internal tool · All captions are original agency content</div>
       </div>
     </div>
 
@@ -661,46 +677,14 @@
     ];
 
     const CAPS = {
-      show_highlight: {
-        caps:  [(a,l)=>`${a} brought the energy to ${l} this weekend.`,(a,l)=>`Another strong weekend for ${a} with a high-energy show in ${l}.`,(a,l)=>`${a} delivered in ${l}. A night to remember.`,(a,l)=>`${l} felt it. ${a} didn't hold back.`],
-        alts:  [(a,l)=>`From the stage to the crowd — ${a} left everything in ${l}.`,(a,l)=>`${a} is on form. ${l} was just the latest proof.`,(a,l)=>`Every show tells a story. ${a} wrote another one in ${l}.`],
-        visual:"High-energy stage shot or crowd reaction photo", angle:"Performance Highlight", reason:"Post while the show momentum is fresh.",
-      },
-      festival_appearance: {
-        caps:  [(a,l)=>`${a} is on the bill. See you at ${l}.`,(a,l)=>`Festival season continues. ${a} confirmed for ${l}.`,(a,l)=>`${a} joins the ${l} lineup.`,(a,l)=>`The stage is set. ${a} heads to ${l}.`],
-        alts:  [(a,l)=>`${a} and ${l} — mark it down.`,(a,l)=>`${l} just got stronger. ${a} is confirmed.`,(a,l)=>`${a} on the festival circuit. ${l} is next.`],
-        visual:"Official festival poster or live artist shot", angle:"Festival Lineup", reason:"Lineup news drives peak engagement — share immediately.",
-      },
-      new_release: {
-        caps:  [(a)=>`${a} is out. New music, new moves.`,(a)=>`New from ${a}. Available everywhere now.`,(a)=>`Fresh from ${a}. This one's been in the works.`,(a)=>`${a} steps into a new chapter. Out now.`],
-        alts:  [(a)=>`${a} delivers. New release — go stream it.`,(a)=>`The wait is over. New music from ${a} is live.`,(a)=>`New music from ${a}. On all platforms today.`],
-        visual:"Single artwork or studio behind-the-scenes", angle:"New Release", reason:"Post while streams are climbing — first 48hrs are critical.",
-      },
-      backstage_moment: {
-        caps:  [(a,l)=>`The work behind the show. ${a} in ${l}.`,(a,l)=>`Before the lights go up — ${a} getting ready in ${l}.`,(a)=>`This is what preparation looks like for ${a}.`,(a,l)=>`Backstage in ${l}. ${a} in their element.`],
-        alts:  [(a)=>`Behind every show, there's a process. ${a} lives it.`,(a,l)=>`${a}, ${l}. The moments before the moment.`,(a)=>`The real work happens before the spotlight. ${a} knows.`],
-        visual:"Authentic backstage or pre-show candid", angle:"Behind the Scenes", reason:"Candid content builds authentic engagement.",
-      },
-      artist_spotlight: {
-        caps:  [(a)=>`${a} has been moving. Here's what you might have missed.`,(a)=>`Consistent, focused, and delivering. That's ${a} right now.`,(a)=>`${a} keeps building. The momentum is real.`,(a)=>`A run like this doesn't happen by accident. ${a} is putting in the work.`],
-        alts:  [(a)=>`Keep your eye on ${a}. The trajectory speaks for itself.`,(a)=>`${a}. In full swing.`,(a)=>`The ${a} era is well underway.`],
-        visual:"Strong portrait or live action composite", angle:"Artist Spotlight", reason:"Recap content reinforces momentum and fills the calendar.",
-      },
-      tour_update: {
-        caps:  [(a,l)=>`${a} is heading to ${l}. Dates confirmed.`,(a,l)=>`The ${l} run is locked in for ${a}.`,(a,l)=>`${a} takes on ${l}. More details soon.`,(a,l)=>`${l} — ${a} is coming your way.`],
-        alts:  [(a,l)=>`Tour life for ${a}. Next stop: ${l}.`,(a,l)=>`${a} on the road again. ${l} is up first.`,(a,l)=>`${a} × ${l}. It's on.`],
-        visual:"Tour map graphic or artist travel shot", angle:"Tour Announcement", reason:"Tour news drives ticket traffic — post early.",
-      },
-      media_feature: {
-        caps:  [(a)=>`${a} in the press. Worth a read.`,(a)=>`The conversation around ${a} is growing. Catch the feature.`,(a)=>`${a} gets the spotlight they've earned.`,(a)=>`The story behind ${a}. Now in print.`],
-        alts:  [(a)=>`More eyes on ${a}. And rightly so.`,(a)=>`${a}, covered. The feature is live.`,(a)=>`The ${a} story, told properly. Out now.`],
-        visual:"Press publication screenshot or editorial cover", angle:"Press Coverage", reason:"Press features amplify credibility — share while fresh.",
-      },
-      momentum_signal: {
-        caps:  [(a)=>`The numbers are speaking for ${a}.`,(a)=>`${a} is building something real. The momentum is there.`,(a)=>`Milestone reached for ${a}. More where that came from.`,(a)=>`${a} keeps growing. Just getting started.`],
-        alts:  [(a)=>`The trajectory for ${a} is pointing in one direction.`,(a)=>`${a} hits another mark. Watch this space.`,(a)=>`Numbers don't lie. ${a} is on a roll.`],
-        visual:"Streaming stats graphic or platform screenshot", angle:"Growth Milestone", reason:"Milestone posts invite sharing and reinforce the growth story.",
-      },
+      show_highlight:      { caps:[(a,l)=>`${a} brought the energy to ${l} this weekend.`,(a,l)=>`Another strong weekend for ${a} with a high-energy show in ${l}.`,(a,l)=>`${a} delivered in ${l}. A night to remember.`,(a,l)=>`${l} felt it. ${a} didn't hold back.`], alts:[(a,l)=>`From the stage to the crowd — ${a} left everything in ${l}.`,(a,l)=>`${a} is on form. ${l} was just the latest proof.`,(a,l)=>`Every show tells a story. ${a} wrote another one in ${l}.`], visual:"High-energy stage shot or crowd reaction photo", angle:"Performance Highlight", reason:"Post while the show momentum is fresh." },
+      festival_appearance: { caps:[(a,l)=>`${a} is on the bill. See you at ${l}.`,(a,l)=>`Festival season continues. ${a} confirmed for ${l}.`,(a,l)=>`${a} joins the ${l} lineup.`,(a,l)=>`The stage is set. ${a} heads to ${l}.`], alts:[(a,l)=>`${a} and ${l} — mark it down.`,(a,l)=>`${l} just got stronger. ${a} is confirmed.`,(a,l)=>`${a} on the festival circuit. ${l} is next.`], visual:"Official festival poster or live artist shot", angle:"Festival Lineup", reason:"Lineup news drives peak engagement — share immediately." },
+      new_release:         { caps:[(a)=>`${a} is out. New music, new moves.`,(a)=>`New from ${a}. Available everywhere now.`,(a)=>`Fresh from ${a}. This one's been in the works.`,(a)=>`${a} steps into a new chapter. Out now.`], alts:[(a)=>`${a} delivers. New release — go stream it.`,(a)=>`The wait is over. New music from ${a} is live.`,(a)=>`New music from ${a}. On all platforms today.`], visual:"Single artwork or studio behind-the-scenes", angle:"New Release", reason:"Post while streams are climbing — first 48hrs are critical." },
+      backstage_moment:    { caps:[(a,l)=>`The work behind the show. ${a} in ${l}.`,(a,l)=>`Before the lights go up — ${a} getting ready in ${l}.`,(a)=>`This is what preparation looks like for ${a}.`,(a,l)=>`Backstage in ${l}. ${a} in their element.`], alts:[(a)=>`Behind every show, there's a process. ${a} lives it.`,(a,l)=>`${a}, ${l}. The moments before the moment.`,(a)=>`The real work happens before the spotlight. ${a} knows.`], visual:"Authentic backstage or pre-show candid", angle:"Behind the Scenes", reason:"Candid content builds authentic engagement." },
+      artist_spotlight:    { caps:[(a)=>`${a} has been moving. Here's what you might have missed.`,(a)=>`Consistent, focused, and delivering. That's ${a} right now.`,(a)=>`${a} keeps building. The momentum is real.`,(a)=>`A run like this doesn't happen by accident. ${a} is putting in the work.`], alts:[(a)=>`Keep your eye on ${a}. The trajectory speaks for itself.`,(a)=>`${a}. In full swing.`,(a)=>`The ${a} era is well underway.`], visual:"Strong portrait or live action composite", angle:"Artist Spotlight", reason:"Recap content reinforces momentum and fills the calendar." },
+      tour_update:         { caps:[(a,l)=>`${a} is heading to ${l}. Dates confirmed.`,(a,l)=>`The ${l} run is locked in for ${a}.`,(a,l)=>`${a} takes on ${l}. More details soon.`,(a,l)=>`${l} — ${a} is coming your way.`], alts:[(a,l)=>`Tour life for ${a}. Next stop: ${l}.`,(a,l)=>`${a} on the road again. ${l} is up first.`,(a,l)=>`${a} × ${l}. It's on.`], visual:"Tour map graphic or artist travel shot", angle:"Tour Announcement", reason:"Tour news drives ticket traffic — post early." },
+      media_feature:       { caps:[(a)=>`${a} in the press. Worth a read.`,(a)=>`The conversation around ${a} is growing. Catch the feature.`,(a)=>`${a} gets the spotlight they've earned.`,(a)=>`The story behind ${a}. Now in print.`], alts:[(a)=>`More eyes on ${a}. And rightly so.`,(a)=>`${a}, covered. The feature is live.`,(a)=>`The ${a} story, told properly. Out now.`], visual:"Press publication screenshot or editorial cover", angle:"Press Coverage", reason:"Press features amplify credibility — share while fresh." },
+      momentum_signal:     { caps:[(a)=>`The numbers are speaking for ${a}.`,(a)=>`${a} is building something real. The momentum is there.`,(a)=>`Milestone reached for ${a}. More where that came from.`,(a)=>`${a} keeps growing. Just getting started.`], alts:[(a)=>`The trajectory for ${a} is pointing in one direction.`,(a)=>`${a} hits another mark. Watch this space.`,(a)=>`Numbers don't lie. ${a} is on a roll.`], visual:"Streaming stats graphic or platform screenshot", angle:"Growth Milestone", reason:"Milestone posts invite sharing and reinforce the growth story." },
     };
 
     const TYPE_LABELS = {
@@ -722,7 +706,7 @@
       const ref = new Date("2026-03-11");
       const scored = pool.map(s => {
         const days = Math.floor((ref - new Date(s.date)) / 86400000);
-        return { ...s, score: Math.max(0, 10-days) + (4-(pm[s.artist]||3))*2 };
+        return { ...s, score: Math.max(0,10-days) + (4-(pm[s.artist]||3))*2 };
       }).sort((a,b) => b.score - a.score);
       const out=[], seen=new Set();
       for (const s of scored) { if (out.length>=3) break; if (!seen.has(s.artist)) { out.push(s); seen.add(s.artist); } }
@@ -743,70 +727,64 @@
 
     function regen(i) {
       const c = currentCards[i];
-      const nv = (c.v+1)%4;
-      currentCards[i] = { ...buildCard(c.sig, nv), approved:false };
+      currentCards[i] = { ...buildCard(c.sig, (c.v+1)%4), approved:false };
       render();
     }
 
     function render() {
       const approvedCount = currentCards.filter(c=>c.approved).length;
-
-      document.getElementById("count-text").innerHTML =
-        `<b>${currentCards.length}</b> suggestions ready · <b>${approvedCount}</b> approved`;
-
-      document.getElementById("week-label").textContent = "11 March 2026";
+      document.getElementById("count-text").innerHTML = `<b>${currentCards.length}</b> suggestions ready · <b>${approvedCount}</b> approved`;
 
       let html = "";
       currentCards.forEach((c, i) => {
-        const srcClass = c.sig.source === "instagram_mention" ? "tag-ig" : "tag-public";
+        const srcClass = c.sig.source === "instagram_mention" ? "tag-ig" : "tag-pub";
         const srcLabel = c.sig.source === "instagram_mention" ? "IG Mention" : "Public Activity";
-
         html += `
           <div class="card${c.approved ? " approved" : ""}">
-            <div class="card-index">
-              <div class="card-index-num">0${i+1}</div>
+            <div class="card-top">
+              <div class="card-top-left">
+                <div class="card-tags">
+                  <span class="card-num">0${i+1}</span>
+                  <span class="tag">${TYPE_LABELS[c.sig.type]||c.sig.type}</span>
+                  <span class="tag ${srcClass}">${srcLabel}</span>
+                </div>
+                <div class="artist-name">${c.sig.artist}</div>
+                <div class="card-angle">${c.angle}</div>
+              </div>
             </div>
-            <div class="card-main">
-              <div class="card-top">
-                <div class="card-top-left">
-                  <div class="card-tags">
-                    <span class="tag tag-type">${TYPE_LABELS[c.sig.type]||c.sig.type}</span>
-                    <span class="tag ${srcClass}">${srcLabel}</span>
-                  </div>
-                  <div class="artist-name">${c.sig.artist}</div>
-                  <div class="card-angle">${c.angle}</div>
-                </div>
-              </div>
 
-              <div class="card-fields">
-                <div>
-                  <div class="field-label">Signal</div>
-                  <div class="field-value">${c.sig.summary}</div>
-                </div>
-                <div>
-                  <div class="field-label">Why Post Now</div>
-                  <div class="field-value field-reason">${c.reason}</div>
-                </div>
-                <div class="field-full">
-                  <div class="field-label">Caption</div>
-                  <div class="field-caption">${c.caption}</div>
-                </div>
-                <div class="field-full">
-                  <div class="field-label">Alternative Caption</div>
-                  <div class="field-alt">${c.alt}</div>
-                </div>
-                <div>
-                  <div class="field-label">Suggested Visual</div>
-                  <div class="field-value field-visual">${c.visual}</div>
-                </div>
-                <div>
-                  <div class="field-label">Date · Location</div>
-                  <div class="field-value">${c.sig.date} · ${c.sig.location}</div>
-                </div>
-              </div>
+            <div class="card-divider"></div>
 
-              <div class="card-actions">
-                <div class="card-meta"></div>
+            <div class="card-fields">
+              <div>
+                <div class="field-label">Signal</div>
+                <div class="field-value">${c.sig.summary}</div>
+              </div>
+              <div>
+                <div class="field-label">Why Post Now</div>
+                <div class="field-value field-reason">${c.reason}</div>
+              </div>
+              <div class="field-full">
+                <div class="field-label">Caption</div>
+                <div class="field-caption">${c.caption}</div>
+              </div>
+              <div class="field-full">
+                <div class="field-label">Alternative Caption</div>
+                <div class="field-alt">${c.alt}</div>
+              </div>
+              <div>
+                <div class="field-label">Suggested Visual</div>
+                <div class="field-value field-visual">${c.visual}</div>
+              </div>
+              <div>
+                <div class="field-label">Date · Location</div>
+                <div class="field-value">${c.sig.date} · ${c.sig.location}</div>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="footer-meta">${c.sig.date} · ${c.sig.location}</div>
+              <div class="footer-actions">
                 ${c.approved
                   ? `<div class="approved-label">Approved — ready to schedule</div>`
                   : `<button class="btn btn-regen" onclick="regen(${i})">↻ Regenerate</button>
@@ -820,10 +798,10 @@
       document.getElementById("main-content").innerHTML = html;
 
       document.getElementById("stats-row").innerHTML = `
-        <div class="stat"><div class="stat-label">Active Artists</div><div class="stat-value accent">${ARTISTS.length}</div></div>
+        <div class="stat"><div class="stat-label">Active Artists</div><div class="stat-value">${ARTISTS.length}</div></div>
         <div class="stat"><div class="stat-label">Signals in Pool</div><div class="stat-value">${SIGNALS.length}</div></div>
         <div class="stat"><div class="stat-label">This Week</div><div class="stat-value">${currentCards.length}</div></div>
-        <div class="stat"><div class="stat-label">Approved</div><div class="stat-value accent">${approvedCount}</div></div>
+        <div class="stat"><div class="stat-label">Approved</div><div class="stat-value green">${approvedCount}</div></div>
       `;
       document.getElementById("bottom").style.display = "block";
     }
